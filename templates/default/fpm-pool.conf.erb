@@ -1,0 +1,65 @@
+[<%= @pool_name %>]
+#Base Pool Configuration
+user = <%= @pool_user %>
+group = <%= @pool_group %>
+<%- if @listen -%>listen = <%= @listen %><% else %>listen = /var/run/php-fpm-<%= @pool_name %>.sock<%- end -%>
+<%- if @listen_owner -%>listen.owner = <%= @listen_owner %><%- end -%>
+<%- if @listen_group -%>listen.group = <%= @listen_group %><%- end -%>
+<%- if @listen_mode -%>listen.mode = <%= @listen_mode %><%- end -%>
+<%- if @listen_allowed_clients -%>listen.allowed_clients = <% @listen_allowed_clients %><%- end -%>
+
+#PM Configuration
+pm = <%= @pm %>
+pm.max_children = <%= @pm_max_children %>
+<% if @pm_max_request %>pm.max_requests = <%= @pm_max_requests %><% end -%>
+<%- if @pm == 'dynamic' -%>
+<% if @pm_start_servers %>pm.start_servers = <%= @pm_start_servers %><% end -%>
+pm.min_spare_servers = <%= @pm_min_spare_servers %>
+pm.max_spare_servers = <%= @pm_max_spare_servers %>
+<% end -%>
+<% if @pm_status_path %>pm.status_path = <%= @pm_status_path %><% end -%>
+
+#Ping Status
+<% if @ping_path %>ping.path = <%= @ping_path %><% end %>
+<% if @ping_response %>ping.response = <%= @ping_response %><% end %>
+
+#Logging
+<% if @request_slowlog_timeout %>request_slowlog_timeout = <%= @request_slowlog_timeout %><% end %>
+<% if @slow_log %>slowlog = <%= @slow_log %><% end %>
+
+#Misc
+<% if @catch_workers_output %>catch_workers_output = <%= @catch_workers_output %><% end %>
+<% if @security_limit_extensions %>security.limit_extensions = <%= @security_limit_extensions %><% end %>
+<% if @chdir %>chdir = <%= @chdir %><% end %>
+<% if @chroot %>chroot = <%= @chroot %><% end %>
+<% if @rlimit_files %>rlimit_files = <%= @rlimit_files %><% end %>
+<% if @rlimit_core %>rlimit_core = <%= @rlimit_core %><% end %>
+
+#PHP INI
+<% if @php_ini_values %>
+<% @php_ini_values.each do |key, value| %>
+php_value[<%= key %>] = <%= value %>
+<% end %>
+<% end %>
+<% if @php_ini_flags %>
+<% @php_ini_flags.each do |key, value| %>
+php_flag[<%= key %>] = <%= value %>
+<% end %>
+<% end %>
+<% if @php_ini_admin_flags %>
+<% @php_ini_admin_flags.each do |key, value| %>
+php_admin_flag[<%= key %>] = <%= value %>
+<% end %>
+<% end %>
+<% if @php_ini_admin_values %>
+<% @php_ini_admin_values.each do |key, value| %>
+php_admin_value[<%= key %>] = <%= value %>
+<% end %>
+<% end %>
+
+#ENV Variables
+<% if @env_variables %>
+<% @env_variables.each do |key, value| %>
+<%= key %> = <%= value %>
+<% end %>
+<% end %>
