@@ -9,8 +9,7 @@ end
 service node['php']['fpm']['service'] do
   provider service_provider if service_provider
   service_name node['php']['fpm']['service']
-  supports :start => true, :stop => true, :restart => true, :reload => true
+  supports :start => true, :stop => true, :restart => true, :reload => true, :status => true
   action [ :enable, :start ]
-  not_if "ps ax| grep php-fpm"
 end
 

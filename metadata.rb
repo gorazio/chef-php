@@ -4,7 +4,7 @@ maintainer_email 'YOUR_EMAIL'
 license          'All rights reserved'
 description      'Installs/Configures php'
 long_description 'Installs/Configures php'
-version          '2.3.22'
+version          '2.3.23'
 
 depends 'apt'
 depends 'cron'
